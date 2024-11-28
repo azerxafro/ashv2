@@ -1,0 +1,71 @@
+---
+import VideoPlayer from './VideoPlayer.astro';
+
+interface Props {
+  reels: {
+    title: string;
+    url: string;
+    thumbnail: string;
+  }[];
+}
+
+const { reels } = Astro.props;
+---
+
+<section class="reels-section">
+  <h2>Reels</h2>
+  <div class="reels-grid">
+    {
+      reels.map((reel) => (
+        <div class="reel-card">
+          <VideoPlayer videoUrl={reel.url} title={reel.title} />
+          <h3>{reel.title}</h3>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .reels-section {
+    margin-top: 4rem;
+  }
+
+  h2 {
+    font-size: var(--text-2xl);
+    color: var(--gray-0);
+    margin-bottom: 2rem;
+  }
+
+  .reels-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+  }
+
+  .reel-card {
+    background: var(--gradient-subtle);
+    border: 1px solid var(--gray-800);
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow var(--theme-transition);
+  }
+
+  .reel-card:hover {
+    box-shadow: var(--shadow-md);
+  }
+
+  h3 {
+    font-size: var(--text-lg);
+    padding: 1rem;
+    margin: 0;
+    color: var(--gray-200);
+  }
+
+  @media (min-width: 50em) {
+    .reels-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>
